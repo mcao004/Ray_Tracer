@@ -12,7 +12,7 @@ bool Sphere::Intersection(const Ray& ray, std::vector<Hit>& hits) const
     if (discriminant < 0.0) {
         return false;
     }
-    t1 = -(dot(ray.direction,ray.endpoint) + sqrt(discriminant));
+    t1 = -(dot(ray.direction,v) + sqrt(discriminant));
     // add hit to list
     h.object = this;
     h.t = t1;
@@ -20,7 +20,7 @@ bool Sphere::Intersection(const Ray& ray, std::vector<Hit>& hits) const
     hits.push_back(h);
 
     if (discriminant > 0.0) {
-        t2 = -(dot(ray.direction,ray.endpoint) - sqrt(discriminant));
+        t2 = -(dot(ray.direction,v) - sqrt(discriminant));
         h.t = t2;
         h.ray_exiting = true;
         hits.push_back(h);

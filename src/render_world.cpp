@@ -35,7 +35,7 @@ Object* Render_World::Closest_Intersection(const Ray& ray, Hit& hit)
                     // update closest
                     closest_object = objects.at(i);
                     hit = hits.at(j);
-                    min_t = hit.t;
+                    min_t = hits.at(j).t;
                 }
             }
         }
@@ -49,7 +49,7 @@ void Render_World::Render_Pixel(const ivec2& pixel_index)
     Ray ray; // TODO: set up the initial view ray here
     ray.endpoint = camera.position;
     ray.direction = (camera.World_Position(pixel_index) - camera.position).normalized();
-    vec3 color=Cast_Ray(ray,1);
+    vec3 color=Cast_Ray(ray,recursion_depth_limit);
     camera.Set_Pixel(pixel_index,Pixel_Color(color));
 }
 
@@ -64,7 +64,7 @@ void Render_World::Render()
 // or the background color if there is no object intersection
 vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 {
-    // TODO
+    // TODO: replace dummies
     vec3 color;
     Hit h;
     Object *closest_object = Closest_Intersection(ray,h); 
