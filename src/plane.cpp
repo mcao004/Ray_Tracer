@@ -10,6 +10,31 @@ bool Plane::
 Intersection(const Ray& ray, std::vector<Hit>& hits) const
 {
     // TODO
+    double denom = dot(this->normal, ray.direction);
+    Hit h;
+    
+    if (denom != 0.0) { // single or no intersection
+        h.t = -dot(this->normal, ray.endpoint - this->x1) / denom;
+        
+        // no intersection
+        if (h.t < 0) return false;
+
+        h.object = this;
+        h.ray_exiting = (denom < 0) ? false : true;
+
+        hits.push_back(h);
+        return true;
+    } else { // either infinite or no intersection
+        if (dot(this->normal, ray.endpoint - this->x1) == 0.0) {
+            h.t = 0;
+            h.object = this;
+            h.ray_exiting = (denom < 0) ? false : true;
+            hits.push_back(h); 
+            return true;
+        }
+    }
+
+
     return false;
 }
 
